@@ -1,6 +1,7 @@
 package com.ait.lienzo.client.core.shape.wires.layouts.impl;
 
 import com.ait.lienzo.client.core.shape.IPrimitive;
+import com.ait.lienzo.client.core.shape.wires.WiresShape;
 import com.ait.lienzo.client.core.shape.wires.layouts.base.LayoutEntry;
 import com.ait.lienzo.client.core.types.Point2D;
 
@@ -13,6 +14,14 @@ public class GridLayoutEntry implements LayoutEntry<GridLayoutContainer> {
                            final int row,
                            final int column) {
         this.primitive = primitive;
+        this.gridEntry = new GridEntry(row,
+                                       column);
+    }
+
+    public GridLayoutEntry(final WiresShape wiresShape,
+                           final int row,
+                           final int column) {
+        this.primitive = wiresShape.getPath().asPrimitive();
         this.gridEntry = new GridEntry(row,
                                        column);
     }

@@ -1,6 +1,7 @@
 package com.ait.lienzo.client.core.shape.wires.layouts.impl;
 
 import com.ait.lienzo.client.core.shape.IPrimitive;
+import com.ait.lienzo.client.core.shape.wires.WiresShape;
 import com.ait.lienzo.client.core.shape.wires.layouts.ILayoutContainer;
 import com.ait.lienzo.client.core.shape.wires.layouts.base.DelegateLayoutContainer;
 import com.ait.lienzo.client.core.shape.wires.layouts.base.LayoutEntriesContainer;
@@ -14,8 +15,8 @@ public class GridLayoutContainer
     private final Grid grid;
     private double[] cellSize;
 
-    public GridLayoutContainer(final int rows,
-                               final int columns) {
+    public GridLayoutContainer(int rows,
+                               int columns) {
         this.layoutContainer = new LayoutEntriesContainer<>(new Consumer<GridLayoutEntry>() {
             @Override
             public void accept(final GridLayoutEntry entry) {
@@ -33,6 +34,15 @@ public class GridLayoutContainer
         getDelegate().add(new GridLayoutContainerEntry(container,
                                                        row,
                                                        column));
+        return this;
+    }
+
+    public GridLayoutContainer add(final WiresShape child,
+                                   final int row,
+                                   final int column) {
+        getDelegate().add(new GridLayoutEntry(child,
+                                              row,
+                                              column));
         return this;
     }
 
@@ -72,11 +82,11 @@ public class GridLayoutContainer
         return this;
     }
 
-    GridLayoutEntry getEntry(final IPrimitive<?> child) {
+    public GridLayoutEntry getEntry(final IPrimitive<?> child) {
         return getDelegate().getEntry(child);
     }
 
-    GridLayoutContainerEntry getContainerEntry(final ILayoutContainer<?> layoutContainer) {
+    public GridLayoutContainerEntry getContainerEntry(final ILayoutContainer<?> layoutContainer) {
         return (GridLayoutContainerEntry) getEntry((IPrimitive<?>) layoutContainer.get());
     }
 
@@ -88,6 +98,10 @@ public class GridLayoutContainer
 
     public Grid getGrid() {
         return grid;
+    }
+
+    public void setGrid(Grid grid) {
+        grid = grid;
     }
 
     BoundingBox getBoundingBox() {
